@@ -73,7 +73,9 @@ final class MyPageViewController: UIViewController {
     // MARK: - Setting TableView Constraints
     
     private func setTableViewConstraints() {
-        tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+        tableView.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
     }
 }
 
