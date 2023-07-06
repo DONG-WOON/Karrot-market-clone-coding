@@ -40,6 +40,8 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, FavoriteB
         return tv
     }()
     
+    lazy var etcButton = UIBarButtonItem(image: UIImage(named: "vertical-ellipsis"), style: .done, target: self, action: #selector(etcButtonDidTapped))
+    
     /// 하단 고정 뷰
     private let itemDetailViewBottomStickyView = ItemDetailViewBottomStickyView()
     
@@ -98,13 +100,12 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, FavoriteB
             guard let error = error else { return }
             self.presentError(error: error)
         }
-        
+        navigationItem.rightBarButtonItem = etcButton
         navigationItem.scrollEdgeAppearance = defaultAppearance
         navigationItem.standardAppearance = scrollAppearance
         navigationItem.compactAppearance = scrollAppearance
         
         itemDetailViewBottomStickyView.delegate = self
-//        setNavigation(itemDetailTableView)
         configureViews()
     }
     
@@ -152,6 +153,10 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, FavoriteB
             await viewModel.toggleFavorites(productID: productID)
         }
         itemDetailViewBottomStickyView.getFavoriteButton().isSelected = false
+    }
+    
+    @objc func etcButtonDidTapped() {
+        
     }
     
     // MARK: - Configure Views

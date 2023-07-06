@@ -53,7 +53,10 @@ enum KarrotRequest: Requestable {
     case fetchItemDetail(ProductID)
     case registerItem
     case toggleFavoriteItem(ProductID)
-
+    
+    // Chat
+//    case fetchChatroomList
+//    case fetchChat
 }
 
 extension KarrotRequest {

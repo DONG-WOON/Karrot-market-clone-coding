@@ -49,9 +49,9 @@ extension Date {
         let Today = Calendar.current.component(.day, from: Date())
         dateFormatter.timeStyle = .short
         if Calendar.current.component(.day, from: self) == Today {
-            dateFormatter.dateFormat = "HH:mm"
+            dateFormatter.dateFormat = "a: HH:mm"
         } else {
-            dateFormatter.dateFormat = "YYYY.MM.dd"
+            dateFormatter.dateFormat = "YYYY년 MM월 dd일"
         }
         return dateFormatter.string(from: self)
     }
