@@ -6,12 +6,15 @@
 //
 
 import UIKit
+import Combine
 
 class ChatRoomListViewController: UIViewController {
     // MARK: - Properties
     
     let viewModel = ChatRoomListViewModel()
+    
     let chatRoomListView = UITableView()
+    var anyCancellable = Set<AnyCancellable>()
     
     private let titleLabel: UILabel = {
         let lbl = UILabel()
@@ -27,10 +30,18 @@ class ChatRoomListViewController: UIViewController {
         super.viewDidLoad()
         
         configureViews()
+        
         Task {
-            let chat = await viewModel.fetchChatList()
+            await viewModel.fetchChatRooms()
         }
-        //        fetchChatList()
+        
+        self.viewModel.$chatRoomList
+                    .receive(on: DispatchQueue.main)
+                    .sink(receiveValue: { [weak self] _ in
+                        self?.chatRoomListView.reloadData()
+                    })
+                    .store(in: &anyCancellable)
+                 
     }
 
     
@@ -78,12 +89,14 @@ extension ChatRoomListViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ChatRoomListViewCell", for: indexPath) as? ChatRoomListViewCell else { return UITableViewCell() }
+        let chatroom = viewModel.chatRoomList[indexPath.row]
+        cell.update(data: chatroom)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let chatVC = ChatViewController()
-        navigationController?.pushViewController(chatVC, animated: true)
+//        let chatVC = ChatViewController(opponent: viewModel.chatRoomList[indexPath.row])
+//        navigationController?.pushViewController(chatVC, animated: true)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

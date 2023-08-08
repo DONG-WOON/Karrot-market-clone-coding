@@ -6,17 +6,9 @@
 //
 
 import UIKit
+import Kingfisher
 
-struct Chat {
-    let nickname = "라일락허벤"
-    let latestMessage = "맛있게 드세요~"
-    let thumbnailImage = UIImage(named: "karrot-1")
-    let profileImage = UIImage(named: "karrot-2")
-}
-
-class ChatRoomListViewCell: UITableViewCell {
-    
-    let defaultChat = Chat()
+final class ChatRoomListViewCell: UITableViewCell {
     
     ///프로필이미지
     let profileImageView = UIImageView(image: UIImage(named: "defaultProfileImage"))
@@ -33,15 +25,24 @@ class ChatRoomListViewCell: UITableViewCell {
         backgroundColor = .white
         self.selectionStyle = .none
         configureViews()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
         
-        nicknameLabel.text = defaultChat.nickname
-        latestMessageLabel.text = defaultChat.latestMessage
-        itemThumbnailImageView.image = defaultChat.thumbnailImage
-        
+        nicknameLabel.text = nil
+        latestMessageLabel.text = nil
+        itemThumbnailImageView.image = nil
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func update(data: ChatRoom) {
+        nicknameLabel.text = data.chatMateNickname
+        latestMessageLabel.text = data.lastMessage
+        itemThumbnailImageView.kf.setImage(with: URL(string: data.chatMateProfileUrl ?? ""))
     }
     
     private func configureViews() {

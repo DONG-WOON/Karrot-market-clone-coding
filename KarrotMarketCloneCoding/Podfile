@@ -6,5 +6,8 @@ target 'KarrotMarketCloneCoding' do
   use_frameworks!
 
   # Pods for KarrotMarketCloneCoding
-  pod 'Alamofire', '~> 5.2'
+        pod 'Alamofire', '~> 5.2'
+        pod 'StompClientLib'
+	pod 'SnapKit', '~> 5.6.0'
+	pod 'FirebaseMessaging'
 end

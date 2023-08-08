@@ -55,8 +55,8 @@ enum KarrotRequest: Requestable {
     case toggleFavoriteItem(ProductID)
     
     // Chat
-//    case fetchChatroomList
-//    case fetchChat
+    case fetchChatRooms
+    case fetchChat(RoomID)
 }
 
 extension KarrotRequest {
@@ -78,6 +78,10 @@ extension KarrotRequest {
             return "/logout"
         case .fetchItemDetail(let productID):
             return "/post/\(productID)"
+        case .fetchChatRooms:
+            return "/members/get-my-chat-list"
+        case .fetchChat:
+            return "/chat/get-by-room-id"
             
             // post
         case  .registerFCMToken:
@@ -105,7 +109,9 @@ extension KarrotRequest {
              .fetchItemDetail,
              .fetchFavoriteItems,
              .fetchSellItems,
-             .logout:
+             .logout,
+             .fetchChatRooms,
+             .fetchChat:
         return .get
             
             // post
@@ -127,7 +133,7 @@ extension KarrotRequest {
             return .json
         case .registerUser, .registerItem:
             return .multipart
-        case .fetchItems, .fetchFavoriteItems, .fetchSellItems, .fetchItemDetail, .logout:
+        case .fetchItems, .fetchFavoriteItems, .fetchSellItems, .fetchItemDetail, .logout, .fetchChat, .fetchChatRooms:
             return .none
         }
     }
@@ -138,13 +144,14 @@ extension KarrotRequest {
         case .registerFCMToken(let token): return .body(token)
         case .login(let user): return .body(user)
         case .toggleFavoriteItem(let productID): return .body(["postId": productID])
+        case .fetchChat(let roomID): return .body(["roomId": roomID])
             
             // query
         case .fetchItems(let queryItem): return .query(queryItem)
         case .fetchSellItems(let queryItem): return .query(queryItem)
             
             // none
-        case .registerUser, .registerItem, .fetchFavoriteItems, .logout, .fetchItemDetail: return .none
+        case .registerUser, .registerItem, .fetchFavoriteItems, .logout, .fetchItemDetail, .fetchChatRooms: return .none
         }
     }
     
@@ -154,14 +161,14 @@ extension KarrotRequest {
         
         var headers = HTTPHeaders()
         
-        guard let cookies = HTTPCookieStorage.shared.cookies else { fatalError("cookie 없음")}
+        guard let cookies = HTTPCookieStorage.shared.cookies else { fatalError("cookie 없음") }
         let cookiesHeader = HTTPCookie.requestHeaderFields(with: cookies)
-        
+
         switch header {
         case .json:
-            headers = [ Header.contentType.type : Header.json.type ]
+            headers = [ Header.contentType.type : Header.json.type]
         case .multipart:
-            headers = [ Header.contentType.type: Header.multipart.type ]
+            headers = [ Header.contentType.type: Header.multipart.type]
         case .none:
             break
         }
@@ -241,3 +248,4 @@ func getImage(url: String?, size: CGSize? = nil) async -> Result<UIImage, Karrot
 
 typealias ID = String
 typealias ProductID = Int
+typealias RoomID = Int

@@ -7,14 +7,28 @@
 
 import Foundation
 import Alamofire
+import SwiftyJSON
 
-struct ChatRoomListViewModel {
+class ChatRoomListViewModel {
     
-    var chatRoomList: [String] = ["", "", "", "", "", "", "", "", ""]
-    
-    func fetchChatList() async {
-//        let data = await AF.request(KarrotRequest.fetchChatroomList).serializingData().response.data
-//        print(data?.toDictionary())
-//        AF.request(KarrotRequest.fetchChatroomList).serializingDecodable(KarrotResponse<>.self).response
+    @Published var chatRoomList: [ChatRoom] = []
+  
+    func fetchChatRooms() async -> Result<Void, KarrotError> {
+        let dataResponse = await AF.request(KarrotRequest.fetchChatRooms).serializingDecodable(KarrotResponse<[ChatRoom]>.self).response
+        let result = handleResponse(dataResponse)
+        
+        switch result {
+        case .success(let response):
+            
+            guard let chatRoomList = response.data else {
+                return .failure(.unwrappingError)
+            }
+            
+            self.chatRoomList = chatRoomList
+            return .success(())
+        case .failure(let error):
+            
+            return .failure(error)
+        }
     }
 }

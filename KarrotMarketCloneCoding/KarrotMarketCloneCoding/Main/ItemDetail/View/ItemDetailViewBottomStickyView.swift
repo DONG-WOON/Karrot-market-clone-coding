@@ -10,7 +10,7 @@ import UIKit
 class ItemDetailViewBottomStickyView: UIView {
     // MARK: - Properties
     
-    weak var delegate: FavoriteButtonDelegate?
+    weak var delegate: (FavoriteButtonDelegate & ChatButtonDelegate)?
     
     private let separaterLine: UIView = {
         
@@ -64,6 +64,7 @@ class ItemDetailViewBottomStickyView: UIView {
         let btn = UIButton()
         
         btn.setTitle("채팅하기", for: .normal)
+        btn.titleLabel?.font = .boldSystemFont(ofSize: 18)
         btn.backgroundColor = .orange
         btn.layer.cornerRadius = 10
         
@@ -76,7 +77,7 @@ class ItemDetailViewBottomStickyView: UIView {
         super.init(frame: frame)
         
         favoriteButton.addTarget(self, action: #selector(favoriteButtonDidTapped), for: .touchUpInside)
-        
+        chatButton.addTarget(self, action: #selector(chat), for: .touchUpInside)
         configureViews()
         setConstraints()
     }
@@ -94,6 +95,10 @@ class ItemDetailViewBottomStickyView: UIView {
         } else {
             delegate?.deleteFavoriteList()
         }
+    }
+    
+    @objc func chat() {
+        delegate?.chat()
     }
     
     func getFavoriteButton() -> UIButton {

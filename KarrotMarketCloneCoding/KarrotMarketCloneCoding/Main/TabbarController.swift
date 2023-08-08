@@ -29,12 +29,11 @@ extension TabbarController {
         
         let homeViewController = templateNavigationController(selectedImage: #imageLiteral(resourceName: "home-selected"), unselectedImage: #imageLiteral(resourceName: "home-unselected"), rootViewController: HomeTableViewController(), title: "홈")
         
-        let chatViewController = templateNavigationController(selectedImage: #imageLiteral(resourceName: "chat-selected"), unselectedImage: #imageLiteral(resourceName: "chat-unselected"), rootViewController: ChatViewController(), title: "채팅")
+        let chatViewController = templateNavigationController(selectedImage: #imageLiteral(resourceName: "chat-selected"), unselectedImage: #imageLiteral(resourceName: "chat-unselected"), rootViewController: ChatRoomListViewController(), title: "채팅")
         
         let profileViewController = templateNavigationController(selectedImage: #imageLiteral(resourceName: "user-selected"), unselectedImage: #imageLiteral(resourceName: "user-unselected"), rootViewController: MyPageViewController(), title: "나의당근")
         
-//        viewControllers = [homeViewController, chatViewController, profileViewController]
-        viewControllers = [chatViewController]
+        viewControllers = [homeViewController, chatViewController, profileViewController]
     }
     
     private func templateNavigationController(selectedImage: UIImage, unselectedImage: UIImage, rootViewController: UIViewController, title: String) -> UINavigationController {
@@ -42,10 +41,9 @@ extension TabbarController {
         let nav = UINavigationController(rootViewController: rootViewController)
         nav.navigationBar.shadowImage = .none
         nav.navigationBar.backgroundColor = .clear
-        nav.navigationBar.isTranslucent = false
+        nav.navigationBar.isTranslucent = true
         nav.navigationBar.barTintColor = .white
         nav.navigationBar.tintColor = .black
-        nav.navigationBar.isTranslucent = true
         
         nav.tabBarItem.image = unselectedImage
         nav.tabBarItem.selectedImage = selectedImage

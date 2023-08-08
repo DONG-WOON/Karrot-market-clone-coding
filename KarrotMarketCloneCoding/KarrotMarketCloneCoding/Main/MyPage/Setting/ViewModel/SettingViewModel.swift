@@ -17,6 +17,7 @@ struct SettingViewModel {
         
         switch result {
         case .success:
+            HTTPCookieStorage.shared.removeCookies(since: Date(timeIntervalSince1970: 0) )
             return .success(true)
         case .failure(let error):
             return .failure(error)

@@ -7,21 +7,22 @@
 
 import Foundation
 
-
-struct ChatMessage: Codable {
-    let id: Int
-    let email: String // 또는 id
-    let message: String
-    let date: Date
-    // image
+struct ChatRoom: Codable {
+    let chatMateNickname: String
+    let chatMateEmail: String
+    let chatMateProfileUrl: String?
+    let chatMateTownName: String
+    let lastMessage: String
+    let lastChatTime: String
+    let chatroomId: Int
 }
 
-extension ChatMessage: Hashable {
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-    
-    static func == (lhs: ChatMessage, rhs: ChatMessage) -> Bool {
-        return lhs.id == rhs.id
-    }
+struct ChatMessage: Codable, Hashable {
+    let email: String // 또는 id
+    let senderNickName: String
+    let senderProfileUrl: String?
+    let receiverNickname: String
+    let receiverProfileUrl: String?
+    let createDateTime: Date
+    let message: String?
 }

@@ -121,6 +121,7 @@ class HomeTableViewController: UIViewController {
             
             switch result {
             case .success(let fetchedItemListData):
+                guard let fetchedItemListData = fetchedItemListData else { return }
                 var snapshot = NSDiffableDataSourceSnapshot<Section, FetchedItem>()
         
                 snapshot.appendSections([Section.main])
@@ -131,12 +132,8 @@ class HomeTableViewController: UIViewController {
                 self.isViewBusy = false
                 
             case .failure(let error):
-                switch error {
-                case .unauthorized:
-                    SceneController.shared.logout()
-                default:
-                    return presentError(error: error)
-                }
+                print(error)
+                SceneController.shared.logout()
             }
         }
     }

@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import Firebase
+import FirebaseCore
 import Alamofire
 import FirebaseMessaging
 
@@ -26,15 +26,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // push notification option 설정
         let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
         
-        UNUserNotificationCenter.current().requestAuthorization(
-            options: authOptions,
-            completionHandler: { _, _ in
-                // apns로 부터 push noti를 받도록 설정
-                DispatchQueue.main.async {
-                    UIApplication.shared.registerForRemoteNotifications()
-                }
-            }
-        )
+//        UNUserNotificationCenter.current().requestAuthorization(
+//            options: authOptions,
+//            completionHandler: { _, _ in
+//                // apns로 부터 push noti를 받도록 설정
+//                DispatchQueue.main.async {
+//                    UIApplication.shared.registerForRemoteNotifications()
+//                }
+//            }
+//        )
         
         return true
     }
@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
    
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         // 2
-        Messaging.messaging().apnsToken = deviceToken
+//        Messaging.messaging().apnsToken = deviceToken
     }
 }
 
@@ -68,27 +68,27 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
-        let request = response.notification.request
-        request.identifier
-        
-        let content = request.content
-        content.title
-        content.userInfo
-        content.body
-        content.categoryIdentifier
-        content.subtitle
-        // 알림 페이로드에 click_action을 사용해도됨?.
-        switch response.actionIdentifier {
-        case "ACCEPT_ACTION":
-            //                sharedMeetingManager.acceptMeeting(user: userID, meetingID: meetingID)
-            break
-            
-        case "DECLINE_ACTION":
-            //                sharedMeetingManager.declineMeeting(user: userID, meetingID: meetingID)
-            break
-        default:
-            break
-        }
+//        let request = response.notification.request
+//        request.identifier
+//
+//        let content = request.content
+//        content.title
+//        content.userInfo
+//        content.body
+//        content.categoryIdentifier
+//        content.subtitle
+//        // 알림 페이로드에 click_action을 사용해도됨?.
+//        switch response.actionIdentifier {
+//        case "ACCEPT_ACTION":
+//            //                sharedMeetingManager.acceptMeeting(user: userID, meetingID: meetingID)
+//            break
+//
+//        case "DECLINE_ACTION":
+//            //                sharedMeetingManager.declineMeeting(user: userID, meetingID: meetingID)
+//            break
+//        default:
+//            break
+//        }
         
         return
     }
@@ -115,9 +115,9 @@ extension AppDelegate: MessagingDelegate {
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         // 1
         // domb: fcm토큰을 먼저 생성하고 기기토큰을 매핑시키는 것으로 보임. 현재 플로우상 앱을 켤때 기기토큰을 매핑하게 되는데 그럼 설정에 들어가서 알림설정을 나중에 하더라도 앱을 켜지 않아도 받을 수 있나??
-        guard let fcmToken = fcmToken else {
-            return
-        }
+//        guard let fcmToken = fcmToken else {
+//            return
+//        }
         
         // fcm토큰 등록시 쿠키가 필요한데 이 시점에서는 사용자가 로그인 후 사용하는 쿠키가 존재하지않음.
         // fcm 토큰을 저장해놨다가 로그인하면 fcm토큰 등록 api를 호출해야하나??
@@ -136,7 +136,7 @@ extension AppDelegate: MessagingDelegate {
 //                return
 //            }
 //        }
-        print(fcmToken, #function)
+//        print(fcmToken, #function)
     }
 }
 
@@ -145,6 +145,6 @@ extension AppDelegate: ErrorPresentable {
 //        let alert = UIAlertController(title: "Message", message: error.localizedDescription, preferredStyle: UIAlertController.Style.alert)
 //
 //        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-        print(error, #function)
+//        print(error, #function)
     }
 }

@@ -100,6 +100,7 @@ class SearchViewController: UIViewController {
             
             switch result {
             case .success(let fetchedItemListData):
+                guard let fetchedItemListData = fetchedItemListData else { return }
                 var snapshot = NSDiffableDataSourceSnapshot<Section, FetchedItem>()
                 
                 snapshot.appendSections([Section.main])

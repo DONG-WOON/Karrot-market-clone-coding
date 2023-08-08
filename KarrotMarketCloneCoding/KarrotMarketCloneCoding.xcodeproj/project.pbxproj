@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		56BC395A9ADB51E880D921C7 /* Pods_KarrotMarketCloneCoding.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84FFF65EC2D21DA804E8D34F /* Pods_KarrotMarketCloneCoding.framework */; };
+		59228F43FE35FC892A757982 /* Pods_KarrotMarketCloneCoding.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84FFF65EC2D21DA804E8D34F /* Pods_KarrotMarketCloneCoding.framework */; };
 		72224A8229E9733400A87834 /* ItemDetailViewImagesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72224A8129E9733400A87834 /* ItemDetailViewImagesCell.swift */; };
 		722CE3AF28EDD0D800D22AB4 /* FavoritesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 722CE3AE28EDD0D800D22AB4 /* FavoritesTableViewController.swift */; };
 		723FE608287D4EDA00A987E7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723FE607287D4EDA00A987E7 /* User.swift */; };
@@ -53,13 +53,15 @@
 		727F2B0F2A502034008A5BAB /* ChatRoomListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727F2B0E2A502034008A5BAB /* ChatRoomListViewModel.swift */; };
 		727F2B6A2A56EB3C008A5BAB /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727F2B692A56EB3C008A5BAB /* ChatViewModel.swift */; };
 		727F2B6C2A56FC23008A5BAB /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727F2B6B2A56FC23008A5BAB /* PaddingLabel.swift */; };
+		727F2B742A57ADDD008A5BAB /* ChatInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727F2B732A57ADDD008A5BAB /* ChatInputView.swift */; };
 		7280C7D429F673E90095216E /* SalesItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7280C7D329F673E90095216E /* SalesItemCollectionViewCell.swift */; };
+		729A9C682A63A662009FFAEE /* WebSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729A9C672A63A662009FFAEE /* WebSocketManager.swift */; };
+		72AFC2802A820EDF0095D917 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 72AFC27F2A820EDF0095D917 /* Kingfisher */; };
+		72AFC2832A8217560095D917 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 72AFC2822A8217560095D917 /* SwiftyJSON */; };
 		72C456B529D660B700E359CD /* LocationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C456B429D660B700E359CD /* LocationInfo.swift */; };
 		72C456B829D6D0E200E359CD /* NewPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C456B729D6D0E200E359CD /* NewPostViewModel.swift */; };
 		72C7143E29DAC1F600A93575 /* LocationSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C7143D29DAC1F600A93575 /* LocationSettingViewController.swift */; };
 		72C7144029DACBC600A93575 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 72C7143F29DACBC600A93575 /* GoogleService-Info.plist */; };
-		72C7144329DACDA600A93575 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 72C7144229DACDA600A93575 /* FirebaseMessaging */; };
-		72C7144629DE83DA00A93575 /* KarrotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C7144529DE83DA00A93575 /* KarrotViewController.swift */; };
 		72ED25C92898D87800031AD1 /* CustomAF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72ED25C82898D87800031AD1 /* CustomAF.swift */; };
 		72ED25CB2898D95F00031AD1 /* ExtensionMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72ED25CA2898D95F00031AD1 /* ExtensionMethod.swift */; };
 		72F7CFB128F91DB200E0D0C0 /* ChatRoomListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72F7CFB028F91DB200E0D0C0 /* ChatRoomListViewCell.swift */; };
@@ -152,13 +154,14 @@
 		727F2B0E2A502034008A5BAB /* ChatRoomListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomListViewModel.swift; sourceTree = "<group>"; };
 		727F2B692A56EB3C008A5BAB /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		727F2B6B2A56FC23008A5BAB /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
+		727F2B732A57ADDD008A5BAB /* ChatInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatInputView.swift; sourceTree = "<group>"; };
 		7280C7D329F673E90095216E /* SalesItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalesItemCollectionViewCell.swift; sourceTree = "<group>"; };
+		729A9C672A63A662009FFAEE /* WebSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketManager.swift; sourceTree = "<group>"; };
 		72C456B429D660B700E359CD /* LocationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInfo.swift; sourceTree = "<group>"; };
 		72C456B729D6D0E200E359CD /* NewPostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostViewModel.swift; sourceTree = "<group>"; };
 		72C7143D29DAC1F600A93575 /* LocationSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSettingViewController.swift; sourceTree = "<group>"; };
 		72C7143F29DACBC600A93575 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		72C7144429DAD31700A93575 /* KarrotMarketCloneCoding.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KarrotMarketCloneCoding.entitlements; sourceTree = "<group>"; };
-		72C7144529DE83DA00A93575 /* KarrotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KarrotViewController.swift; sourceTree = "<group>"; };
 		72ED25C82898D87800031AD1 /* CustomAF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAF.swift; sourceTree = "<group>"; };
 		72ED25CA2898D95F00031AD1 /* ExtensionMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionMethod.swift; sourceTree = "<group>"; };
 		72F7CFB028F91DB200E0D0C0 /* ChatRoomListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomListViewCell.swift; sourceTree = "<group>"; };
@@ -213,8 +216,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				72C7144329DACDA600A93575 /* FirebaseMessaging in Frameworks */,
-				56BC395A9ADB51E880D921C7 /* Pods_KarrotMarketCloneCoding.framework in Frameworks */,
+				72AFC2832A8217560095D917 /* SwiftyJSON in Frameworks */,
+				72AFC2802A820EDF0095D917 /* Kingfisher in Frameworks */,
+				59228F43FE35FC892A757982 /* Pods_KarrotMarketCloneCoding.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,6 +330,7 @@
 				72F7CFB028F91DB200E0D0C0 /* ChatRoomListViewCell.swift */,
 				72F7CFB228F9222C00E0D0C0 /* ChatViewController.swift */,
 				72F7CFB428F922AD00E0D0C0 /* ChatCell.swift */,
+				727F2B732A57ADDD008A5BAB /* ChatInputView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -408,7 +413,6 @@
 			isa = PBXGroup;
 			children = (
 				723FE6972889091D00A987E7 /* TabbarController.swift */,
-				72C7144529DE83DA00A93575 /* KarrotViewController.swift */,
 				7252267929CAAEDA00491C64 /* Home */,
 				7252267C29CAAF0500491C64 /* Search */,
 				D3DF36692884491F00F20065 /* NewPost */,
@@ -657,6 +661,7 @@
 				D3E122F8287BF66000A1EDC8 /* AppDelegate.swift */,
 				D3E122FA287BF66000A1EDC8 /* SceneDelegate.swift */,
 				7252269029CAB09800491C64 /* SceneController.swift */,
+				729A9C672A63A662009FFAEE /* WebSocketManager.swift */,
 				7252269A29CAB7DA00491C64 /* Model */,
 				7252269629CAB34C00491C64 /* Main */,
 				7252267D29CAAF1200491C64 /* Authentication */,
@@ -690,7 +695,8 @@
 			);
 			name = KarrotMarketCloneCoding;
 			packageProductDependencies = (
-				72C7144229DACDA600A93575 /* FirebaseMessaging */,
+				72AFC27F2A820EDF0095D917 /* Kingfisher */,
+				72AFC2822A8217560095D917 /* SwiftyJSON */,
 			);
 			productName = KarrotMarketCloneCoding;
 			productReference = D3E122F5287BF66000A1EDC8 /* KarrotMarketCloneCoding.app */;
@@ -721,7 +727,8 @@
 			);
 			mainGroup = D3E122EC287BF66000A1EDC8;
 			packageReferences = (
-				72C7144129DACDA600A93575 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				72AFC27E2A820EDF0095D917 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				72AFC2812A8217560095D917 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 			);
 			productRefGroup = D3E122F6287BF66000A1EDC8 /* Products */;
 			projectDirPath = "";
@@ -832,6 +839,7 @@
 				7259DF9929F25779004A9FFF /* SalesItemTableViewCell.swift in Sources */,
 				D3DF366328842A7300F20065 /* TitleTableViewCell.swift in Sources */,
 				D3A2158A288D905400D06AD3 /* Notification.swift in Sources */,
+				727F2B742A57ADDD008A5BAB /* ChatInputView.swift in Sources */,
 				D3DF368A288ACC0900F20065 /* CategoryTableViewController.swift in Sources */,
 				D3E12313287D9AF800A1EDC8 /* UserCheckViewController.swift in Sources */,
 				D3F0E7C628E28717006AEB3D /* SimpleAlertController.swift in Sources */,
@@ -840,7 +848,6 @@
 				7259DF9529F2572B004A9FFF /* FavoritesViewModel.swift in Sources */,
 				725226A329CAB97C00491C64 /* CustomPlaceholderTextView.swift in Sources */,
 				D3FB4CE428919C3F003300B0 /* Formatters.swift in Sources */,
-				72C7144629DE83DA00A93575 /* KarrotViewController.swift in Sources */,
 				D3E122FB287BF66000A1EDC8 /* SceneDelegate.swift in Sources */,
 				D3DF36782885B53C00F20065 /* PhotosCollectionViewCell.swift in Sources */,
 				D3DF36802889785000F20065 /* PhotosCollectionView.swift in Sources */,
@@ -873,6 +880,7 @@
 				723FE69E2889484700A987E7 /* Copyright.swift in Sources */,
 				727F2B6C2A56FC23008A5BAB /* PaddingLabel.swift in Sources */,
 				725226A729CAC18B00491C64 /* AuthenticationViewModel.swift in Sources */,
+				729A9C682A63A662009FFAEE /* WebSocketManager.swift in Sources */,
 				723FE67D2885385000A987E7 /* ItemDetailViewProfileCell.swift in Sources */,
 				D3A2158B288D905400D06AD3 /* Enum.swift in Sources */,
 				723FE681288539A900A987E7 /* ItemDetailViewOtherItemsCell.swift in Sources */,
@@ -1102,21 +1110,34 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		72C7144129DACDA600A93575 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+		72AFC27E2A820EDF0095D917 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 9.0.0;
+				minimumVersion = 7.0.0;
+			};
+		};
+		72AFC2812A8217560095D917 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		72C7144229DACDA600A93575 /* FirebaseMessaging */ = {
+		72AFC27F2A820EDF0095D917 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 72C7144129DACDA600A93575 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseMessaging;
+			package = 72AFC27E2A820EDF0095D917 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+		72AFC2822A8217560095D917 /* SwiftyJSON */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 72AFC2812A8217560095D917 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			productName = SwiftyJSON;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

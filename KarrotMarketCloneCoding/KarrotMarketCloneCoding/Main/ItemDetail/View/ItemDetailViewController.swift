@@ -9,7 +9,7 @@ import UIKit
 import Combine
 import Alamofire
 
-class ItemDetailViewController: UIViewController, UITableViewDelegate, FavoriteButtonDelegate {
+class ItemDetailViewController: UIViewController, UITableViewDelegate, FavoriteButtonDelegate, ChatButtonDelegate {
     
     // MARK: - Properties
     
@@ -155,6 +155,11 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, FavoriteB
         itemDetailViewBottomStickyView.getFavoriteButton().isSelected = false
     }
     
+    func chat() {
+        let chatVC = ChatViewController(opponent: viewModel.item!.email)
+        navigationController?.pushViewController(chatVC, animated: true)
+    }
+    
     @objc func etcButtonDidTapped() {
         
     }
@@ -289,5 +294,9 @@ extension ItemDetailViewController: UIScrollViewDelegate {
 protocol FavoriteButtonDelegate: AnyObject {
     func addFavoriteList()
     func deleteFavoriteList()
+}
+
+protocol ChatButtonDelegate: AnyObject {
+    func chat()
 }
 

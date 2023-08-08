@@ -99,6 +99,7 @@ final class NewPostTableViewController: UIViewController {
            // 3
            let keyboardRectangle = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
             print(keyboardRectangle.width)
+            
         }
     }
 }
