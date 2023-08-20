@@ -16,75 +16,43 @@ class HomeTableViewController: UIViewController {
     // MARK: - Properties
     
     var viewModel = HomeTableViewModel()
-    var isViewBusy = false
+    var isViewBusy = false {
+        didSet {
+            isViewBusy ? itemTableView.refreshControl?.beginRefreshing() :  itemTableView.refreshControl?.endRefreshing()
+        }
+    }
     
     private var dataSource: TableViewDataSource!
     private var snapshot = TableViewSnapshot()
-    private var cellProvider: TableViewCellProvider = { (tableView, indexPath, item) in
-
-        let cell = tableView.dequeueReusableCell(withIdentifier: HomeTableViewCell.reuseIdentifier, for: indexPath) as! HomeTableViewCell
-
-        cell.item = item
-
-        return cell
-    }
+    private var cellProvider: TableViewCellProvider!
     
-    private let itemTableView : UITableView = {
-        
-        let tv = UITableView(frame:CGRect.zero, style: .plain)
-        
-        tv.register(HomeTableViewCell.self, forCellReuseIdentifier: HomeTableViewCell.reuseIdentifier)
-        tv.separatorColor = .systemGray5
-        tv.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
-        
-        return tv
-    }()
-    
-    private lazy var addPostButton: UIButton = {
-        
-        let btn = UIButton(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
-        let image = UIImage(named: "plusButton")
-        
-        btn.backgroundColor = .white
-        btn.layer.cornerRadius = 60 / 2
-        btn.clipsToBounds = true
-        btn.setImage(image, for: .normal)
-        btn.addTarget(self, action: #selector(addButtonDidTapped), for: .touchUpInside)
-
-        return btn
-    }()
+    private let itemTableView = UITableView()
+    private let addPostButton = UIButton(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
+    private let refresh = UIRefreshControl()
     
     // MARK: - Actions
     
     @objc func searchButtonDidTapped() {
-        
         let searchVC = SearchViewController()
-        
         navigationController?.pushViewController(searchVC, animated: true)
     }
     
     @objc func notiButtonDidTapped() {
-        
         let notificationVC = NotificationViewController()
-        
         navigationController?.pushViewController(notificationVC, animated: true)
     }
     
     @objc func addButtonDidTapped() {
-        
         let newPostVC = NewPostTableViewController()
         let nav = UINavigationController(rootViewController: newPostVC)
         
-        nav.navigationBar.barTintColor = .label
         nav.modalPresentationStyle  = .fullScreen
         
         newPostVC.doneButtonTapped = { [weak self] in
             Task {
-                guard let weakSelf = self else { return }
-
-                weakSelf.viewModel.latestPage = nil
-                
-                weakSelf.fetchItems()
+                guard let self else { return }
+                self.viewModel.latestPage = nil
+                self.fetchItems()
             }
         }
         
@@ -98,6 +66,7 @@ class HomeTableViewController: UIViewController {
     
         configureViews()
         setupNavigationItems()
+        setButton()
         setupTableView()
         
         fetchItems()
@@ -116,7 +85,6 @@ class HomeTableViewController: UIViewController {
         isViewBusy = true
         
         Task {
-            
             let result = await viewModel.fetchItems()
             
             switch result {
@@ -127,7 +95,7 @@ class HomeTableViewController: UIViewController {
                 snapshot.appendSections([Section.main])
                 snapshot.appendItems(fetchedItemListData.content)
                 
-                await self.dataSource.apply(snapshot, animatingDifferences: true)
+                await self.dataSource.apply(snapshot, animatingDifferences: false)
                 
                 self.isViewBusy = false
                 
@@ -141,7 +109,6 @@ class HomeTableViewController: UIViewController {
     // MARK: - Setup
     
     private func setupNavigationItems() {
-        
         let searchBarButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchButtonDidTapped))
         let notiBarButton = UIBarButtonItem(image: UIImage(named: "bell"), style: .plain, target: self, action: #selector(notiButtonDidTapped))
         
@@ -152,12 +119,34 @@ class HomeTableViewController: UIViewController {
     }
     
     private func setupTableView() {
+        itemTableView.register(HomeTableViewCell.self, forCellReuseIdentifier: HomeTableViewCell.reuseIdentifier)
+        itemTableView.separatorColor = .systemGray5
+        itemTableView.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+        itemTableView.backgroundColor = .white
+        
+        cellProvider = { (tableView, indexPath, item) in
+
+           let cell = tableView.dequeueReusableCell(withIdentifier: HomeTableViewCell.reuseIdentifier, for: indexPath) as! HomeTableViewCell
+
+           cell.item = item
+
+           return cell
+       }
         
         dataSource = TableViewDataSource(tableView: itemTableView, cellProvider: cellProvider)
         
         itemTableView.delegate = self
         itemTableView.dataSource = dataSource
-        itemTableView.backgroundColor = .white
+        itemTableView.refreshControl = refresh
+        refresh.addTarget(self, action: #selector(fetchItems), for: .valueChanged)
+    }
+    
+    private func setButton() {
+        addPostButton.backgroundColor = .white
+        addPostButton.layer.cornerRadius = 60 / 2
+        addPostButton.clipsToBounds = true
+        addPostButton.setImage(UIImage(named: "plusButton"), for: .normal)
+        addPostButton.addTarget(self, action: #selector(addButtonDidTapped), for: .touchUpInside)
     }
     
     // MARK: - Configure UI
@@ -192,6 +181,13 @@ extension HomeTableViewController: UITableViewDelegate {
                 }
             }
         }
+        
+//        if indexPaths.contains(where: { $0.item == videoList.count - 1 }) && page < 15 && !isEndPage {
+//            page += 1
+//            print("🔥 ",#function)
+//            callRequest(searchText: searchBar.text!, page: page)
+//        }
+//        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
