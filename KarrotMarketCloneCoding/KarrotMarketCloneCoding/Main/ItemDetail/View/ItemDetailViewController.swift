@@ -55,14 +55,14 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, FavoriteB
     
     let defaultAppearance: UINavigationBarAppearance = {
         let appearance = UINavigationBarAppearance()
-        
+
         appearance.backgroundColor = UIColor.clear
         appearance.shadowColor = .clear
         appearance.shadowImage = .none
         appearance.backgroundEffect = .none
         appearance.backgroundImage = .none
         appearance.titleTextAttributes = [.foregroundColor: UIColor.lightText]
-        
+
         return appearance
     }()
     
@@ -86,11 +86,17 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, FavoriteB
                 item != nil
             })
             .sink { [weak self] item in
+                guard let self else { return }
                 guard let item = item else { return }
                 Task {
-                    await self?.configure(with: item)
-                    self?.itemDetailViewBottomStickyView.configure(price: item.price)
-                    self?.itemDetailTableView.reloadData()
+                    await self.configure(with: item)
+                    self.itemDetailViewBottomStickyView.configure(price: item.price)
+                    self.itemDetailTableView.reloadData()
+                    
+                    guard let myEmail = UserDefaults.standard.string(forKey: UserDefaultsKey.myEmail) else { return }
+                    if item.email != myEmail {
+                        self.itemDetailViewBottomStickyView.showChatButton()
+                    }
                 }
             }
             .store(in: &cancellables)
@@ -156,7 +162,8 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, FavoriteB
     }
     
     func chat() {
-        let chatVC = ChatViewController(opponent: viewModel.item!.email)
+        guard let item = viewModel.item else { return }
+        let chatVC = ChatViewController(itemDetail: item)
         navigationController?.pushViewController(chatVC, animated: true)
     }
     

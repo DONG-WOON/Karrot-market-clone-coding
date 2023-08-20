@@ -64,6 +64,7 @@ final class MyPageViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
+        
         tableView.register(MyPageTableViewCell.self, forCellReuseIdentifier: "Cell")
         tableView.register(MyPageTableViewHeaderFooterView.self, forHeaderFooterViewReuseIdentifier: "Header")
         tableView.separatorStyle = .none

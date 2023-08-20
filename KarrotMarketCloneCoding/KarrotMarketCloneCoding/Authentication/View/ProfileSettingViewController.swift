@@ -15,7 +15,7 @@ class ProfileSettingViewController: UIViewController {
     private let email: String
     private let password: String
     private let location: LocationInfo
-    private var nickname: String?
+//    private var nickname: String?
     
     private var signUpViewModel = AuthenticationViewModel()
     
@@ -80,7 +80,7 @@ class ProfileSettingViewController: UIViewController {
     
     @objc func doneButtonTapped() {
         print("사용자의 위치: \(location)")
-        
+        guard let nickname = profileView.nicknameTextField.text else { return }
         Task {
             let result = await signUpViewModel.signup(user: User(email: email, password: password, nickname: nickname, userLocation: location), profileImage: profileImage)
             
@@ -220,7 +220,6 @@ extension ProfileSettingViewController: UITextFieldDelegate {
         
         profileView.doneButton.isEnabled = finalText.count > 0 ? true : false
         profileView.doneButton.backgroundColor = finalText.count > 0 ? UIColor.appColor(.carrot) : .systemGray
-        nickname = textField.text
         
         return finalText.count <= 10
     }

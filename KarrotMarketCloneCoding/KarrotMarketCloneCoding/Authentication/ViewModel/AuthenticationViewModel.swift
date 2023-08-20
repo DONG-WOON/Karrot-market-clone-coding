@@ -8,7 +8,7 @@
 import UIKit
 import Alamofire
 
-struct AuthenticationViewModel {
+class AuthenticationViewModel {
     
     func login(user: User) async -> Result<Bool, KarrotError> {
         
@@ -17,6 +17,7 @@ struct AuthenticationViewModel {
         
         switch result {
         case .success:
+            UserDefaults.standard.setValue(user.email, forKey: UserDefaultsKey.myEmail)
             return .success(true)
         case .failure(let error):
             return .failure(error)

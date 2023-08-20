@@ -29,7 +29,7 @@ final class ContentTableViewCell: UITableViewCell {
         contentView.addSubview(contentTextView)
         
         contentTextView.snp.makeConstraints { make in
-            make.edges.equalTo(contentView).inset(UIEdgeInsets(top: 10, left: 15, bottom: 10, right: 20))
+            make.edges.equalTo(contentView).inset(UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 20))
         }
     }
     

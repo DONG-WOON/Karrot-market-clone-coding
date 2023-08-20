@@ -8,7 +8,7 @@
 import UIKit
 import Alamofire
 
-struct NewPostViewModel {
+class NewPostViewModel {
     
     func registerItem(item: Item, images: [UIImage]) async -> Result<Bool,KarrotError> {
         

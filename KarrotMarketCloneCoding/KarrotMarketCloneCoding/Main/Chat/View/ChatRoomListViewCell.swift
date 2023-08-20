@@ -40,6 +40,7 @@ final class ChatRoomListViewCell: UITableViewCell {
     }
     
     func update(data: ChatRoom) {
+        
         nicknameLabel.text = data.chatMateNickname
         latestMessageLabel.text = data.lastMessage
         itemThumbnailImageView.kf.setImage(with: URL(string: data.chatMateProfileUrl ?? ""))

@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-struct SettingViewModel {
+class SettingViewModel {
     
     func logout() async -> Result<Bool, KarrotError> {
         
