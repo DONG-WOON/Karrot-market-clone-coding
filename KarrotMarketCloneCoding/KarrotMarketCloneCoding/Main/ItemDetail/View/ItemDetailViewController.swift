@@ -9,7 +9,7 @@ import UIKit
 import Combine
 import Alamofire
 
-class ItemDetailViewController: UIViewController, UITableViewDelegate, FavoriteButtonDelegate, ChatButtonDelegate {
+class ItemDetailViewController: UIViewController, UITableViewDelegate, FavoriteButtonDelegate {
     
     // MARK: - Properties
     
@@ -92,11 +92,6 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, FavoriteB
                     await self.configure(with: item)
                     self.itemDetailViewBottomStickyView.configure(price: item.price)
                     self.itemDetailTableView.reloadData()
-                    
-                    guard let myEmail = UserDefaults.standard.string(forKey: UserDefaultsKey.myEmail) else { return }
-                    if item.email != myEmail {
-                        self.itemDetailViewBottomStickyView.showChatButton()
-                    }
                 }
             }
             .store(in: &cancellables)
@@ -111,7 +106,6 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, FavoriteB
         navigationItem.standardAppearance = scrollAppearance
         navigationItem.compactAppearance = scrollAppearance
         
-        itemDetailViewBottomStickyView.delegate = self
         configureViews()
     }
     
@@ -159,12 +153,6 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, FavoriteB
             await viewModel.toggleFavorites(productID: productID)
         }
         itemDetailViewBottomStickyView.getFavoriteButton().isSelected = false
-    }
-    
-    func chat() {
-        guard let item = viewModel.item else { return }
-        let chatVC = ChatViewController(itemDetail: item)
-        navigationController?.pushViewController(chatVC, animated: true)
     }
     
     @objc func etcButtonDidTapped() {

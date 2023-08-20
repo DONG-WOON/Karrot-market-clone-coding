@@ -34,7 +34,7 @@ final class WebSocketManager {
     
     func sendMessage(_ message: String, opponentEmail: String, myEmail: String) {
         if socketClient.isConnected() {
-            socketClient.sendMessage(message: message, toDestination: "/app/chat/\(opponentEmail)/\(myEmail)", withHeaders: ["email": "\(myEmail)"], withReceipt: nil)
+            socketClient.sendMessage(message: message, toDestination: "/app/chat/\(myEmail)/\(opponentEmail)", withHeaders: ["email": "\(myEmail)"], withReceipt: nil)
         } else {
             print("error: socket is not connect")
         }
@@ -46,11 +46,17 @@ final class WebSocketManager {
 }
 
 extension WebSocketManager: StompClientLibDelegate {
+    
     func stompClientDidConnect(client: StompClientLib) {
+        print(#function,"🔥")
     }
     
+    
     func stompClient(client: StompClientLib, didReceiveMessageWithJSONBody jsonBody: AnyObject?, akaStringBody stringBody: String?, withHeader header: [String : String]?, withDestination destination: String) {
-        print(client, stringBody ?? "", header ?? [:], destination)
+        if let data = stringBody?.data(using: String.Encoding.utf8) {
+            let message = try? JSONDecoder().decode(Message.self, from: data)
+            NotificationCenter.default.post(name: .receiveMessage, object: message)
+        }
     }
     
     func stompClientDidDisconnect(client: StompClientLib) {

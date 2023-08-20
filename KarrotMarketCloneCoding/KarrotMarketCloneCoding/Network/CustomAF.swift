@@ -8,12 +8,6 @@
 import Foundation
 import Alamofire
 
-protocol Requestable: URLRequestConvertible {
-    var baseUrl: String { get }
-    var header: RequestHeaders { get }
-    var path: String { get }
-    var parameters: RequestParameters { get }
-}
 enum RequestHeaders {
     case json
     case multipart
@@ -36,7 +30,7 @@ enum RequestParameters {
     case none
 }
 
-enum KarrotRequest: Requestable {
+enum KarrotRequest: URLRequestConvertible {
     
     // FCM
     case registerFCMToken(String)
@@ -56,7 +50,7 @@ enum KarrotRequest: Requestable {
     
     // Chat
     case fetchChatRooms
-    case fetchChat(RoomID)
+    case fetchChatLog(RoomID)
 }
 
 extension KarrotRequest {
@@ -80,7 +74,7 @@ extension KarrotRequest {
             return "/post/\(productID)"
         case .fetchChatRooms:
             return "/members/get-my-chat-list"
-        case .fetchChat:
+        case .fetchChatLog:
             return "/chat/get-by-room-id"
             
             // post
@@ -111,7 +105,7 @@ extension KarrotRequest {
              .fetchSellItems,
              .logout,
              .fetchChatRooms,
-             .fetchChat:
+             .fetchChatLog:
         return .get
             
             // post
@@ -133,7 +127,7 @@ extension KarrotRequest {
             return .json
         case .registerUser, .registerItem:
             return .multipart
-        case .fetchItems, .fetchFavoriteItems, .fetchSellItems, .fetchItemDetail, .logout, .fetchChat, .fetchChatRooms:
+        case .fetchItems, .fetchFavoriteItems, .fetchSellItems, .fetchItemDetail, .logout, .fetchChatLog, .fetchChatRooms:
             return .none
         }
     }
@@ -144,11 +138,11 @@ extension KarrotRequest {
         case .registerFCMToken(let token): return .body(token)
         case .login(let user): return .body(user)
         case .toggleFavoriteItem(let productID): return .body(["postId": productID])
-        case .fetchChat(let roomID): return .body(["roomId": roomID])
             
             // query
         case .fetchItems(let queryItem): return .query(queryItem)
         case .fetchSellItems(let queryItem): return .query(queryItem)
+        case .fetchChatLog(let roomID): return .query(["roomId": roomID])
             
             // none
         case .registerUser, .registerItem, .fetchFavoriteItems, .logout, .fetchItemDetail, .fetchChatRooms: return .none
@@ -158,7 +152,7 @@ extension KarrotRequest {
     func asURLRequest() throws -> URLRequest {
         let url = try baseUrl.asURL()
         var urlRequest = try URLRequest(url: url.appendingPathComponent(path), method: method)
-        
+        urlRequest.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
         var headers = HTTPHeaders()
         
         guard let cookies = HTTPCookieStorage.shared.cookies else { fatalError("cookie 없음") }

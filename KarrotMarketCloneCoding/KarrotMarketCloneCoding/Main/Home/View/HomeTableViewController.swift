@@ -18,7 +18,7 @@ class HomeTableViewController: UIViewController {
     var viewModel = HomeTableViewModel()
     var isViewBusy = false {
         didSet {
-            isViewBusy ? itemTableView.refreshControl?.beginRefreshing() :  itemTableView.refreshControl?.endRefreshing()
+//            isViewBusy ? itemTableView.refreshControl?.beginRefreshing() :  itemTableView.refreshControl?.endRefreshing()
         }
     }
     
@@ -82,28 +82,35 @@ class HomeTableViewController: UIViewController {
     
     @objc
     private func fetchItems() {
-        isViewBusy = true
+//        isViewBusy = true
+        let item = FetchedItem(imageURL: "", id: 123, title: "당근마켓", price: 0, createDateTime: "23.10.25", townName: "가산동", salesState: "판매중", favoriteUserCount: 2, chatCount: 2)
         
-        Task {
-            let result = await viewModel.fetchItems()
-            
-            switch result {
-            case .success(let fetchedItemListData):
-                guard let fetchedItemListData = fetchedItemListData else { return }
-                var snapshot = NSDiffableDataSourceSnapshot<Section, FetchedItem>()
+        var snapshot = TableViewSnapshot()
+        snapshot.appendSections([Section.main])
+        snapshot.appendItems([item])
+        dataSource.apply(snapshot)
         
-                snapshot.appendSections([Section.main])
-                snapshot.appendItems(fetchedItemListData.content)
-                
-                await self.dataSource.apply(snapshot, animatingDifferences: false)
-                
-                self.isViewBusy = false
-                
-            case .failure(let error):
-                print(error)
-                SceneController.shared.logout()
-            }
-        }
+        
+//        Task {
+//            let result = await viewModel.fetchItems()
+//
+//            switch result {
+//            case .success(let fetchedItemListData):
+//                guard let fetchedItemListData = fetchedItemListData else { return }
+//                var snapshot = NSDiffableDataSourceSnapshot<Section, FetchedItem>()
+//
+//                snapshot.appendSections([Section.main])
+//                snapshot.appendItems(fetchedItemListData.content)
+//
+//                await self.dataSource.apply(snapshot, animatingDifferences: false)
+//
+//                self.isViewBusy = false
+//
+//            case .failure(let error):
+//                print(error)
+//                SceneController.shared.logout()
+//            }
+//        }
     }
     
     // MARK: - Setup
@@ -193,7 +200,6 @@ extension HomeTableViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let productId = dataSource.itemIdentifier(for: indexPath)?.id else { return }
         let nextVC = ItemDetailViewController(productID: productId)
-        
         navigationController?.pushViewController(nextVC, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
     }

@@ -31,31 +31,27 @@ class ChatRoomListViewController: UIViewController {
         
         configureViews()
         
-        Task {
-            await viewModel.fetchChatRooms()
-        }
-        
         self.viewModel.$chatRoomList
                     .receive(on: DispatchQueue.main)
                     .sink(receiveValue: { [weak self] _ in
                         self?.chatRoomListView.reloadData()
                     })
                     .store(in: &anyCancellable)
-                 
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        Task {
+            await viewModel.fetchChatRooms()
+        }
+    }
     
     // MARK: - Configure
     
     private func configureViews() {
         view.backgroundColor = .white
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
-        
-        let notiBarButton = UIBarButtonItem(image: UIImage(named: "bell"), style: .plain, target: self, action: #selector(notiButtonDidTapped))
-        
-        notiBarButton.tintColor = .label
-        
-        navigationItem.rightBarButtonItems = [notiBarButton]
         
         setupTableView()
     }
@@ -74,11 +70,6 @@ class ChatRoomListViewController: UIViewController {
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
     }
-    
-    @objc
-    func notiButtonDidTapped() {
-        
-    }
 }
 
 extension ChatRoomListViewController: UITableViewDelegate, UITableViewDataSource {
@@ -95,11 +86,9 @@ extension ChatRoomListViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let chatVC = ChatViewController(opponent: viewModel.chatRoomList[indexPath.row])
-//        navigationController?.pushViewController(chatVC, animated: true)
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        // 스크롤시 
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let chatVC = ChatViewController(chatroom: viewModel.chatRoomList[indexPath.row])
+        navigationController?.pushViewController(chatVC, animated: true)
     }
 }

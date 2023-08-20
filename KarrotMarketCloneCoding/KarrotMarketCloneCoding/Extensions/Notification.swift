@@ -13,4 +13,5 @@ extension Notification.Name {
     static let imageRemoved = Notification.Name("imageRemoved")
     static let updateLocationInfo = Notification.Name("updateLocationInfo")
     static let updateItemList = Notification.Name("updateItemList")
+    static let receiveMessage = Notification.Name("receiveMessage")
 }

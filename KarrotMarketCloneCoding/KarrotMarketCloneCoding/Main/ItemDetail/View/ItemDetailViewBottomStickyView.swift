@@ -67,6 +67,7 @@ class ItemDetailViewBottomStickyView: UIView {
         btn.titleLabel?.font = .boldSystemFont(ofSize: 18)
         btn.backgroundColor = .orange
         btn.layer.cornerRadius = 10
+        btn.isHidden = true
         
         return btn
     }()

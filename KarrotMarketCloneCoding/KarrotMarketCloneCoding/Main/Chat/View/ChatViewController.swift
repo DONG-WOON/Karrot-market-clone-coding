@@ -8,34 +8,39 @@
 import UIKit
 import StompClientLib
 
-typealias ChatViewDataSource = UITableViewDiffableDataSource<Section, ChatMessage>
-typealias ChatViewSnapshot = NSDiffableDataSourceSnapshot<Section, ChatMessage>
-typealias ChatViewCellProvider = (UITableView, IndexPath, ChatMessage) -> UITableViewCell
+typealias ChatViewDataSource = UITableViewDiffableDataSource<Section, Message>
+typealias ChatViewSnapshot = NSDiffableDataSourceSnapshot<Section, Message>
+typealias ChatViewCellProvider = (UITableView, IndexPath, Message) -> UITableViewCell
 
 class ChatViewController: UIViewController {
-    var viewModel = ChatViewModel()
-    let opponent: String
-    var shouldScrollToBottom = true
-    var myEmail = "aa"
-    private var socketClient = StompClientLib()
+
+    var viewModel: ChatViewModel
     
     // MARK: - Private Properties
     
     private let chatTableView = UITableView()
     private let chatInputView = ChatInputView()
-    
-    private var dataSource: ChatViewDataSource?
+    private var dataSource: ChatViewDataSource!
     private var snapshot = ChatViewSnapshot()
     private var cellProvider: ChatViewCellProvider!
-    
     private var scrollToIndexPath: IndexPath?
     
     // MARK: - Life Cycle
     
-    init(opponent: String) {
-        self.opponent = opponent
+    init(chatroom: ChatRoom) {
+        self.viewModel = ChatViewModel(chatRoom: chatroom)
         
         super.init(nibName: nil, bundle: nil)
+        
+        NotificationCenter.default.addObserver(forName: .receiveMessage, object: nil, queue: .main) { [weak self] notification in
+            guard let self else { return }
+            guard let message = notification.object as? Message else { return }
+            viewModel.receiveMessage(message: message)
+            var snapshot = self.dataSource.snapshot()
+            snapshot.appendSections([.main])
+            snapshot.appendItems(viewModel.chats, toSection: .main)
+            dataSource.apply(snapshot)
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -45,76 +50,67 @@ class ChatViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = opponent
         configureViews()
+        configureTableView()
         
-        
-//        WebSocketManager.shared.
-//
-        cellProvider = { [self] (tableView, indexPath, item) in
-
-            if viewModel.chats[indexPath.row].email == myEmail {
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: "MyChatCell", for: indexPath) as? MyChatCell else { fatalError() }
-                cell.messageLabel.text = viewModel.chats[indexPath.row].message
-                cell.dateLabel.text = viewModel.chats[indexPath.row].createDateTime.formatToString()
-                
-                return cell
-            } else {
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: "OpponentChatCell", for: indexPath) as? OpponentChatCell else { fatalError() }
-
-                cell.messageLabel.text = viewModel.chats[indexPath.row].message
-                cell.dateLabel.text = viewModel.chats[indexPath.row].createDateTime.formatToString()
-               
-                return cell
+        Task {
+            await viewModel.fetchChatLog() {
+                DispatchQueue.main.async { [self] in
+                    snapshot.appendSections([Section.main])
+                    snapshot.appendItems(viewModel.chats)
+                    dataSource.apply(snapshot, animatingDifferences: false)
+                }
             }
         }
         
-        dataSource = ChatViewDataSource(tableView: chatTableView, cellProvider: cellProvider)
+        chatInputView.plusButtonTapAction = {
+            print(#function)
+        }
+        
+        chatInputView.sendButtonTapAction = { [weak self] text in
+            guard let self else { return }
+            self.viewModel.sendMessage(text: text) { message in
+                var snapshot = self.dataSource.snapshot()
+                snapshot.appendItems([message], toSection: .main)
+                self.dataSource?.apply(snapshot)
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         tabBarController?.tabBar.isHidden = true
-        
-        snapshot.appendSections([Section.main])
-        snapshot.appendItems(viewModel.chats)
-        
-        enableTapGesture()
-        
-        self.dataSource?.apply(snapshot, animatingDifferences: true)
-        
-        chatTableView.transform = CGAffineTransform(scaleX: 1, y: -1)
-    
-        scrollToIndexPath = IndexPath(row: 13, section: 0)
-        
-        chatTableView.scrollsToTop = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         tabBarController?.tabBar.isHidden = false
+        viewModel.webSocketManager.disconnect()
     }
-
+    
     // MARK: - Actions
     
     @objc
     private func pullKeyboard() {
         self.view.endEditing(true)
     }
-    
+
     private func enableTapGesture() {
         let singleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(pullKeyboard))
-        
+
         singleTapGestureRecognizer.numberOfTapsRequired = 1
         singleTapGestureRecognizer.isEnabled = true
         singleTapGestureRecognizer.cancelsTouchesInView = false
-        
+
         chatTableView.addGestureRecognizer(singleTapGestureRecognizer)
     }
     
+}
     // MARK: - Configure
+    
+extension ChatViewController {
     
     private func configureViews() {
         view.backgroundColor = .white
@@ -122,20 +118,12 @@ class ChatViewController: UIViewController {
         view.addSubview(chatTableView)
         view.addSubview(chatInputView)
         
-        chatInputView.plusButtonTapAction = {
-            print(#function)
-        }
-        
-        chatInputView.sendButtonTapAction = { text in
-            let sendMessagePath = "app/chat/test@ruu.kr/domb@ruu.kr"
-            
-            self.socketClient.sendMessage(message: "sdsd", toDestination: sendMessagePath, withHeaders: nil, withReceipt: nil)
-        }
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(pullKeyboard)))
         
         chatTableView.dataSource = dataSource
         chatTableView.separatorStyle = .none
         chatTableView.rowHeight = UITableView.automaticDimension
-        chatTableView.estimatedRowHeight = UITableView.automaticDimension
+        
         chatTableView.register(MyChatCell.self, forCellReuseIdentifier: "MyChatCell")
         chatTableView.register(OpponentChatCell.self, forCellReuseIdentifier: "OpponentChatCell")
         
@@ -145,56 +133,34 @@ class ChatViewController: UIViewController {
         }
         
         chatInputView.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             make.top.equalTo(chatTableView.snp.bottom)
+            make.bottom.equalTo(view.keyboardLayoutGuide.snp.top)
         }
     }
-}
-
-extension ChatViewController: StompClientLibDelegate {
-    func stompClient(client: StompClientLib!, didReceiveMessageWithJSONBody jsonBody: AnyObject?, akaStringBody stringBody: String?, withHeader header: [String : String]?, withDestination destination: String) {
-        print("🔥 ", #function)
-    }
     
-    func stompClientDidDisconnect(client: StompClientLib!) {
-        print("🔥 ", #function)
-        let subscribePath = "queue/message/test@ruu.kr/domb@ruu.kr"
-//        let sendMessagePath = "app/chat/domb@ruu.kr/test@ruu.kr"
-        socketClient.subscribe(destination: subscribePath)
+    private func configureTableView() {
+        cellProvider = { [self] (tableView, indexPath, item) in
+            
+            if viewModel.chats[indexPath.row].senderNickname == viewModel.chatroom.chatMateNickname {
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: "OpponentChatCell", for: indexPath) as? OpponentChatCell else { fatalError() }
+                cell.messageLabel.text = viewModel.chats[indexPath.row].message
+                cell.dateLabel.text = viewModel.chats[indexPath.row].createDateTime
+                
+                return cell
+            } else {
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: "MyChatCell", for: indexPath) as? MyChatCell else { fatalError() }
+                
+                cell.messageLabel.text = viewModel.chats[indexPath.row].message
+                cell.dateLabel.text = viewModel.chats[indexPath.row].createDateTime
+                
+                return cell
+            }
+        }
         
-//        socketClient.sendMessage(message: "sdsd", toDestination: sendMessagePath, withHeaders: nil, withReceipt: nil)
-    }
-    
-    func serverDidSendReceipt(client: StompClientLib!, withReceiptId receiptId: String) {
-        print("🔥 ", #function)
-    }
-    
-    func serverDidSendError(client: StompClientLib!, withErrorMessage description: String, detailedErrorMessage message: String?) {
-        print("🔥 ", #function)
-    }
-    
-    func serverDidSendPing() {
-        print("🔥 ", #function)
-    }
-    
-    func stompClientDidConnect(client: StompClientLib!) {
-        print("🔥 ", #function)
+        dataSource = ChatViewDataSource(tableView: chatTableView, cellProvider: cellProvider)
+        
+        chatTableView.transform = CGAffineTransform(scaleX: 1, y: -1)
+        chatTableView.scrollsToTop = true
     }
 }
-
-//extension ChatViewController: URLSessionWebSocketDelegate {
-//    func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didOpenWithProtocol protocol: String?) {
-//        let senderEmail = myEmail
-//        let receiverEmail = opponent
-//
-//        webSocketTask.send(.string("SUBSCRIBE\nid:sub-0\ndestination:/queue/messages\nemail:\(senderEmail)\n\n")) { error in
-//            print(error?.localizedDescription)
-//        }
-//    }
-//
-//    func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didCloseWith closeCode: URLSessionWebSocketTask.CloseCode, reason: Data?) {
-//        print(closeCode, "\n", reason)
-//    }
-//}
-//
-//

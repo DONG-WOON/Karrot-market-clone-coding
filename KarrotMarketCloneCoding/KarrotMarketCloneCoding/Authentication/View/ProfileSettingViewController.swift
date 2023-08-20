@@ -15,7 +15,7 @@ class ProfileSettingViewController: UIViewController {
     private let email: String
     private let password: String
     private let location: LocationInfo
-//    private var nickname: String?
+    private var nickname: String?
     
     private var signUpViewModel = AuthenticationViewModel()
     

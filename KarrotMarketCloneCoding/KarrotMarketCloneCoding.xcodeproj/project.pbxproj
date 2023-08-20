@@ -34,9 +34,6 @@
 		7248CA47288F5CED00DDF939 /* HomeTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7248CA46288F5CED00DDF939 /* HomeTableViewModel.swift */; };
 		7252269129CAB09800491C64 /* SceneController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7252269029CAB09800491C64 /* SceneController.swift */; };
 		7252269D29CAB8E100491C64 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7252269C29CAB8E100491C64 /* CustomTextField.swift */; };
-		7252269F29CAB91B00491C64 /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7252269E29CAB91B00491C64 /* CustomNavigationBar.swift */; };
-		725226A129CAB94600491C64 /* CustomInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725226A029CAB94600491C64 /* CustomInputView.swift */; };
-		725226A329CAB97C00491C64 /* CustomPlaceholderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725226A229CAB97C00491C64 /* CustomPlaceholderTextView.swift */; };
 		725226A529CABE0300491C64 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725226A429CABE0300491C64 /* SettingViewModel.swift */; };
 		725226A729CAC18B00491C64 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725226A629CAC18B00491C64 /* AuthenticationViewModel.swift */; };
 		725226AB29CAEC7E00491C64 /* ItemDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725226AA29CAEC7E00491C64 /* ItemDetailViewModel.swift */; };
@@ -50,6 +47,7 @@
 		7259DF9529F2572B004A9FFF /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7259DF9429F2572B004A9FFF /* FavoritesViewModel.swift */; };
 		7259DF9729F25767004A9FFF /* FavoritesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7259DF9629F25767004A9FFF /* FavoritesTableViewCell.swift */; };
 		7259DF9929F25779004A9FFF /* SalesItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7259DF9829F25779004A9FFF /* SalesItemTableViewCell.swift */; };
+		725F8DA12A91D55A009462D0 /* FCMManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725F8DA02A91D55A009462D0 /* FCMManager.swift */; };
 		727F2B0F2A502034008A5BAB /* ChatRoomListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727F2B0E2A502034008A5BAB /* ChatRoomListViewModel.swift */; };
 		727F2B6A2A56EB3C008A5BAB /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727F2B692A56EB3C008A5BAB /* ChatViewModel.swift */; };
 		727F2B6C2A56FC23008A5BAB /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727F2B6B2A56FC23008A5BAB /* PaddingLabel.swift */; };
@@ -57,7 +55,8 @@
 		7280C7D429F673E90095216E /* SalesItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7280C7D329F673E90095216E /* SalesItemCollectionViewCell.swift */; };
 		729A9C682A63A662009FFAEE /* WebSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729A9C672A63A662009FFAEE /* WebSocketManager.swift */; };
 		72AFC2802A820EDF0095D917 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 72AFC27F2A820EDF0095D917 /* Kingfisher */; };
-		72AFC2832A8217560095D917 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 72AFC2822A8217560095D917 /* SwiftyJSON */; };
+		72C405C52A83DDAB0044C891 /* KarrotURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C405C42A83DDAB0044C891 /* KarrotURL.swift */; };
+		72C4062E2A8A64B70044C891 /* UserDefaultsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C4062D2A8A64B70044C891 /* UserDefaultsKey.swift */; };
 		72C456B529D660B700E359CD /* LocationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C456B429D660B700E359CD /* LocationInfo.swift */; };
 		72C456B829D6D0E200E359CD /* NewPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C456B729D6D0E200E359CD /* NewPostViewModel.swift */; };
 		72C7143E29DAC1F600A93575 /* LocationSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C7143D29DAC1F600A93575 /* LocationSettingViewController.swift */; };
@@ -135,9 +134,6 @@
 		7248CA46288F5CED00DDF939 /* HomeTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewModel.swift; sourceTree = "<group>"; };
 		7252269029CAB09800491C64 /* SceneController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneController.swift; sourceTree = "<group>"; };
 		7252269C29CAB8E100491C64 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
-		7252269E29CAB91B00491C64 /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
-		725226A029CAB94600491C64 /* CustomInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInputView.swift; sourceTree = "<group>"; };
-		725226A229CAB97C00491C64 /* CustomPlaceholderTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPlaceholderTextView.swift; sourceTree = "<group>"; };
 		725226A429CABE0300491C64 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		725226A629CAC18B00491C64 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		725226AA29CAEC7E00491C64 /* ItemDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailViewModel.swift; sourceTree = "<group>"; };
@@ -151,12 +147,15 @@
 		7259DF9429F2572B004A9FFF /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
 		7259DF9629F25767004A9FFF /* FavoritesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesTableViewCell.swift; sourceTree = "<group>"; };
 		7259DF9829F25779004A9FFF /* SalesItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalesItemTableViewCell.swift; sourceTree = "<group>"; };
+		725F8DA02A91D55A009462D0 /* FCMManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMManager.swift; sourceTree = "<group>"; };
 		727F2B0E2A502034008A5BAB /* ChatRoomListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomListViewModel.swift; sourceTree = "<group>"; };
 		727F2B692A56EB3C008A5BAB /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		727F2B6B2A56FC23008A5BAB /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		727F2B732A57ADDD008A5BAB /* ChatInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatInputView.swift; sourceTree = "<group>"; };
 		7280C7D329F673E90095216E /* SalesItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalesItemCollectionViewCell.swift; sourceTree = "<group>"; };
 		729A9C672A63A662009FFAEE /* WebSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketManager.swift; sourceTree = "<group>"; };
+		72C405C42A83DDAB0044C891 /* KarrotURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KarrotURL.swift; sourceTree = "<group>"; };
+		72C4062D2A8A64B70044C891 /* UserDefaultsKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKey.swift; sourceTree = "<group>"; };
 		72C456B429D660B700E359CD /* LocationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInfo.swift; sourceTree = "<group>"; };
 		72C456B729D6D0E200E359CD /* NewPostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostViewModel.swift; sourceTree = "<group>"; };
 		72C7143D29DAC1F600A93575 /* LocationSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSettingViewController.swift; sourceTree = "<group>"; };
@@ -216,7 +215,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				72AFC2832A8217560095D917 /* SwiftyJSON in Frameworks */,
 				72AFC2802A820EDF0095D917 /* Kingfisher in Frameworks */,
 				59228F43FE35FC892A757982 /* Pods_KarrotMarketCloneCoding.framework in Frameworks */,
 			);
@@ -251,6 +249,7 @@
 				D3F0E7C728E28B89006AEB3D /* Constant.swift */,
 				723FE60F287D649400A987E7 /* Constraints.swift */,
 				D3E12301287BF66100A1EDC8 /* Assets.xcassets */,
+				72C4062D2A8A64B70044C891 /* UserDefaultsKey.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -442,9 +441,6 @@
 				D3DF362A2881B35200F20065 /* ReusableSettingProfileView.swift */,
 				723FE67A288531F300A987E7 /* ReusableProfileView.swift */,
 				7252269C29CAB8E100491C64 /* CustomTextField.swift */,
-				725226A029CAB94600491C64 /* CustomInputView.swift */,
-				725226A229CAB97C00491C64 /* CustomPlaceholderTextView.swift */,
-				7252269E29CAB91B00491C64 /* CustomNavigationBar.swift */,
 				727F2B6B2A56FC23008A5BAB /* PaddingLabel.swift */,
 			);
 			path = UIComponent;
@@ -661,7 +657,9 @@
 				D3E122F8287BF66000A1EDC8 /* AppDelegate.swift */,
 				D3E122FA287BF66000A1EDC8 /* SceneDelegate.swift */,
 				7252269029CAB09800491C64 /* SceneController.swift */,
+				725F8DA02A91D55A009462D0 /* FCMManager.swift */,
 				729A9C672A63A662009FFAEE /* WebSocketManager.swift */,
+				72C405C42A83DDAB0044C891 /* KarrotURL.swift */,
 				7252269A29CAB7DA00491C64 /* Model */,
 				7252269629CAB34C00491C64 /* Main */,
 				7252267D29CAAF1200491C64 /* Authentication */,
@@ -696,7 +694,6 @@
 			name = KarrotMarketCloneCoding;
 			packageProductDependencies = (
 				72AFC27F2A820EDF0095D917 /* Kingfisher */,
-				72AFC2822A8217560095D917 /* SwiftyJSON */,
 			);
 			productName = KarrotMarketCloneCoding;
 			productReference = D3E122F5287BF66000A1EDC8 /* KarrotMarketCloneCoding.app */;
@@ -728,7 +725,6 @@
 			mainGroup = D3E122EC287BF66000A1EDC8;
 			packageReferences = (
 				72AFC27E2A820EDF0095D917 /* XCRemoteSwiftPackageReference "Kingfisher" */,
-				72AFC2812A8217560095D917 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 			);
 			productRefGroup = D3E122F6287BF66000A1EDC8 /* Products */;
 			projectDirPath = "";
@@ -836,6 +832,7 @@
 				D3E1231D28800E5700A1EDC8 /* ReusableSignView.swift in Sources */,
 				D3E12319287FF55E00A1EDC8 /* SignUpViewController.swift in Sources */,
 				725226B129CAF5C200491C64 /* LocationSelectTableViewCell.swift in Sources */,
+				72C405C52A83DDAB0044C891 /* KarrotURL.swift in Sources */,
 				7259DF9929F25779004A9FFF /* SalesItemTableViewCell.swift in Sources */,
 				D3DF366328842A7300F20065 /* TitleTableViewCell.swift in Sources */,
 				D3A2158A288D905400D06AD3 /* Notification.swift in Sources */,
@@ -843,10 +840,9 @@
 				D3DF368A288ACC0900F20065 /* CategoryTableViewController.swift in Sources */,
 				D3E12313287D9AF800A1EDC8 /* UserCheckViewController.swift in Sources */,
 				D3F0E7C628E28717006AEB3D /* SimpleAlertController.swift in Sources */,
-				7252269F29CAB91B00491C64 /* CustomNavigationBar.swift in Sources */,
+				725F8DA12A91D55A009462D0 /* FCMManager.swift in Sources */,
 				722CE3AF28EDD0D800D22AB4 /* FavoritesTableViewController.swift in Sources */,
 				7259DF9529F2572B004A9FFF /* FavoritesViewModel.swift in Sources */,
-				725226A329CAB97C00491C64 /* CustomPlaceholderTextView.swift in Sources */,
 				D3FB4CE428919C3F003300B0 /* Formatters.swift in Sources */,
 				D3E122FB287BF66000A1EDC8 /* SceneDelegate.swift in Sources */,
 				D3DF36782885B53C00F20065 /* PhotosCollectionViewCell.swift in Sources */,
@@ -865,7 +861,6 @@
 				723FE61F287DACA100A987E7 /* MyPageTableViewCell.swift in Sources */,
 				7259DF9329F2571A004A9FFF /* SalesViewModel.swift in Sources */,
 				723FE67B288531F300A987E7 /* ReusableProfileView.swift in Sources */,
-				725226A129CAB94600491C64 /* CustomInputView.swift in Sources */,
 				725226AB29CAEC7E00491C64 /* ItemDetailViewModel.swift in Sources */,
 				723FE62728801F1600A987E7 /* MyPageHeaderView.swift in Sources */,
 				723FE629288044AB00A987E7 /* MyPageTableViewHeaderFooterView.swift in Sources */,
@@ -881,6 +876,7 @@
 				727F2B6C2A56FC23008A5BAB /* PaddingLabel.swift in Sources */,
 				725226A729CAC18B00491C64 /* AuthenticationViewModel.swift in Sources */,
 				729A9C682A63A662009FFAEE /* WebSocketManager.swift in Sources */,
+				72C4062E2A8A64B70044C891 /* UserDefaultsKey.swift in Sources */,
 				723FE67D2885385000A987E7 /* ItemDetailViewProfileCell.swift in Sources */,
 				D3A2158B288D905400D06AD3 /* Enum.swift in Sources */,
 				723FE681288539A900A987E7 /* ItemDetailViewOtherItemsCell.swift in Sources */,
@@ -1118,14 +1114,6 @@
 				minimumVersion = 7.0.0;
 			};
 		};
-		72AFC2812A8217560095D917 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1133,11 +1121,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 72AFC27E2A820EDF0095D917 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
-		};
-		72AFC2822A8217560095D917 /* SwiftyJSON */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 72AFC2812A8217560095D917 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
-			productName = SwiftyJSON;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
