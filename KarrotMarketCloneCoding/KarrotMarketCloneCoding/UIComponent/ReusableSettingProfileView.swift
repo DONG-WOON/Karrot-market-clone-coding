@@ -96,7 +96,11 @@ final class ReusableSettingProfileView: UIView {
     }
     
     private func setEditingDoneButtonLayout() {
-        doneButton.anchor(bottom: self.bottomAnchor, leading: self.leadingAnchor, trailing: self.trailingAnchor, height: 75)
+        doneButton.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(self)
+            make.height.equalTo(70)
+            make.bottom.equalTo(self.keyboardLayoutGuide.snp.top)
+        }
     }
     
     func setupTapGestures(target: UIViewController, selector: Selector) {

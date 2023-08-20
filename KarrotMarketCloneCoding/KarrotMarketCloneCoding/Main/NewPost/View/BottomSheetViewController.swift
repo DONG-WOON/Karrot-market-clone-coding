@@ -58,19 +58,20 @@ class BottomSheetViewController: UIViewController {
         view.addSubview(button)
         
         label.snp.makeConstraints { make in
-            make.top.equalTo(view).inset(30)
+            make.top.greaterThanOrEqualTo(view).inset(30)
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
             make.height.equalTo(30)
         }
         textField.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
             make.top.equalTo(label.snp.bottom).offset(10)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
             make.bottom.equalTo(button.snp.top).offset(-10)
             make.height.equalTo(50)
         }
         button.snp.makeConstraints { make in
             make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             make.height.equalTo(50)
+            make.bottom.equalTo(view.keyboardLayoutGuide.snp.top)
         }
     }
 }

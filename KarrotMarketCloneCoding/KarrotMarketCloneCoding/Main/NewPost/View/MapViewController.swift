@@ -98,7 +98,7 @@ class MapViewController: UIViewController {
         if let sheet = bottomSheetVC.sheetPresentationController {
             
             if #available(iOS 16.0, *) {
-                sheet.detents = [ .custom { _ in return 300 } ]
+                sheet.detents = [ .custom { _ in return 170 } ]
                 
             } else {
                 // Fallback on earlier versions

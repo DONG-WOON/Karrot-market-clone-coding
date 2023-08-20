@@ -27,8 +27,8 @@ final class NewPostTableViewController: UIViewController {
         }
     }
     
-    internal var maxChoosableImages = 10
-    internal var doneButtonTapped: () -> () = { }
+    var maxChoosableImages = 10
+    var doneButtonTapped: () -> () = { }
     
     private let newPostTableView = NewPostTableView()
     private lazy var activityIndicator = UIActivityIndicatorView(style: .large)
@@ -36,31 +36,18 @@ final class NewPostTableViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.addSubview(newPostTableView)
-        view.addSubview(activityIndicator)
+        configureViews()
         
         newPostTableView.delegate = self
         newPostTableView.dataSource = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(removeImage), name: .imageRemoved, object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(handle(keyboardShowNotification:)),
-                                               name: UIResponder.keyboardDidShowNotification,
-                                               object: nil)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        view.backgroundColor = .systemBackground
-        
         setupNaviBar()
-        setupNewPostTableView()
-        
-        activityIndicator.snp.makeConstraints { make in
-            make.center.equalTo(view)
-            make.height.equalTo(50)
-        }
     }
     
     private func setupNaviBar() {
@@ -70,11 +57,6 @@ final class NewPostTableViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(close))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "완료", style: .plain, target: self, action: #selector(post))
         navigationItem.rightBarButtonItem?.tintColor = UIColor.appColor(.carrot)
-    }
-    
-    private func setupNewPostTableView() {
-        
-        newPostTableView.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: view.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
     }
     
     private func setupImagePicker() {
@@ -88,19 +70,6 @@ final class NewPostTableViewController: UIViewController {
         
         picker.delegate = self
         present(picker, animated: true, completion: nil)
-    }
-    
-    @objc private func handle(keyboardShowNotification notification: Notification) {
-        // 1
-        print("Keyboard show notification")
-        
-        // 2
-        if let userInfo = notification.userInfo,
-           // 3
-           let keyboardRectangle = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
-            print(keyboardRectangle.width)
-            
-        }
     }
 }
 
@@ -159,6 +128,24 @@ extension NewPostTableViewController {
     }
 }
 
+extension NewPostTableViewController {
+    private func configureViews() {
+        
+        view.addSubview(newPostTableView)
+        view.addSubview(activityIndicator)
+        view.backgroundColor = .white
+        
+        newPostTableView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            make.bottom.equalTo(view.keyboardLayoutGuide.snp.top)
+        }
+        activityIndicator.snp.makeConstraints { make in
+            make.center.equalTo(view)
+            make.height.equalTo(50)
+        }
+    }
+}
+
 extension NewPostTableViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -166,14 +153,13 @@ extension NewPostTableViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0 {
-            return 110
-        } else if indexPath.row == 2 {
-            return 50
-        } else if indexPath.row == 4 {
-            return 200
-        } else {
-            return UITableView.automaticDimension
+        
+        switch indexPath.row {
+        case 0: return 90
+        case 1...3: return 55
+        case 4: return 200
+        case 5: return 55
+        default: return  UITableView.automaticDimension
         }
     }
     
@@ -271,7 +257,7 @@ extension NewPostTableViewController: UITableViewDelegate {
 }
 
 extension NewPostTableViewController: PHPickerViewControllerDelegate {
-    //    deinit시 제거해줘야하나?
+    
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         
         picker.dismiss(animated: true)
