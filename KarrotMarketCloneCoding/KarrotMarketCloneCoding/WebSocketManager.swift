@@ -13,14 +13,10 @@ enum WebSocketError: Error {
 }
 
 final class WebSocketManager {
-    static let shared = WebSocketManager()
     private var socketClient: StompClientLib
-    private let url = URL(string: "")!
-    var isConnect: Bool {
-        socketClient.isConnected()
-    }
+    private let url = URL(string: KarrotURL.socket)!
     
-    private init() {
+    init() {
         socketClient = StompClientLib()
     }
     
@@ -28,7 +24,12 @@ final class WebSocketManager {
         if socketClient.isConnected() {
             socketClient.disconnect()
         }
+        
         socketClient.openSocketWithURLRequest(request: NSURLRequest(url: url) , delegate: self)
+    }
+    
+    func disconnect() {
+        socketClient.disconnect()
     }
     
     func sendMessage(_ message: String, opponentEmail: String, myEmail: String) {
@@ -49,7 +50,7 @@ extension WebSocketManager: StompClientLibDelegate {
     }
     
     func stompClient(client: StompClientLib, didReceiveMessageWithJSONBody jsonBody: AnyObject?, akaStringBody stringBody: String?, withHeader header: [String : String]?, withDestination destination: String) {
-        print(#function,"🔥")
+        print(client, stringBody ?? "", header ?? [:], destination)
     }
     
     func stompClientDidDisconnect(client: StompClientLib) {
@@ -57,11 +58,11 @@ extension WebSocketManager: StompClientLibDelegate {
     }
     
     func serverDidSendReceipt(client: StompClientLib, withReceiptId receiptId: String) {
-        print(#function,"🔥")
+        print(client, receiptId)
     }
     
     func serverDidSendError(client: StompClientLib, withErrorMessage description: String, detailedErrorMessage message: String?) {
-        print(#function,"🔥")
+        print(client, description)
     }
     
     func serverDidSendPing() {
