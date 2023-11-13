@@ -10,7 +10,7 @@ import Alamofire
 
 class ChatRoomListViewModel {
     
-    @Published var chatRoomList: [ChatRoom] = []
+    @Published var chatRoomList: [ChatRoom] = [ChatRoom(chatMateNickname: "co", chatMateEmail: "co@co.com", chatMateProfileUrl: nil, chatMateTownName: nil, lastMessage: "나야", lastChatTime: "", chatroomId: 1)]
   
     func fetchChatRooms() async -> Result<Void, KarrotError> {
         let dataResponse = await AF.request(KarrotRequest.fetchChatRooms).serializingDecodable(KarrotResponse<[ChatRoom]>.self).response

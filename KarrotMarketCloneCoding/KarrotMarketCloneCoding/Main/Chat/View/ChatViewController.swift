@@ -32,19 +32,18 @@ class ChatViewController: UIViewController {
         
         super.init(nibName: nil, bundle: nil)
         
-        NotificationCenter.default.addObserver(forName: .receiveMessage, object: nil, queue: .main) { [weak self] notification in
-            guard let self else { return }
-            guard let message = notification.object as? Message else { return }
-            viewModel.receiveMessage(message: message)
-            var snapshot = self.dataSource.snapshot()
-            snapshot.appendSections([.main])
-            snapshot.appendItems(viewModel.chats, toSection: .main)
-            dataSource.apply(snapshot)
-        }
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(reloadChatLog),
+            name: .receiveMessage, object: nil
+        )
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func viewDidLoad() {
@@ -52,27 +51,20 @@ class ChatViewController: UIViewController {
         
         configureViews()
         configureTableView()
+        firstSnapshot()
         
         Task {
             await viewModel.fetchChatLog() {
-                DispatchQueue.main.async { [self] in
-                    snapshot.appendSections([Section.main])
-                    snapshot.appendItems(viewModel.chats)
-                    dataSource.apply(snapshot, animatingDifferences: false)
+                DispatchQueue.main.async { [weak self] in
+                    self?.firstSnapshot()
                 }
             }
         }
         
-        chatInputView.plusButtonTapAction = {
-            print(#function)
-        }
-        
         chatInputView.sendButtonTapAction = { [weak self] text in
             guard let self else { return }
-            self.viewModel.sendMessage(text: text) { message in
-                var snapshot = self.dataSource.snapshot()
-                snapshot.appendItems([message], toSection: .main)
-                self.dataSource?.apply(snapshot)
+            self.viewModel.sendMessage(text: text) { [weak self] message in
+                self?.takeSnapshot([message])
             }
         }
     }
@@ -91,6 +83,33 @@ class ChatViewController: UIViewController {
     }
     
     // MARK: - Actions
+    
+    @objc
+    private func reloadChatLog() {
+        takeSnapshot(viewModel.chats)
+    }
+    
+    private func firstSnapshot() {
+        var snapshot = ChatViewSnapshot()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(viewModel.chats, toSection: .main)
+        dataSource.apply(snapshot, animatingDifferences: false)
+    }
+    
+    private func takeSnapshot(_ items: [Message]) {
+        if viewModel.chats.first != nil {
+            viewModel.chats.insert(contentsOf: items, at: 0)
+        } else {
+            viewModel.chats.append(contentsOf: items)
+        }
+        var snapshot = ChatViewSnapshot()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(viewModel.chats, toSection: .main)
+        dataSource.apply(snapshot, animatingDifferences: false)
+        if !viewModel.chats.isEmpty {
+            chatTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+        }
+    }
     
     @objc
     private func pullKeyboard() {
@@ -140,19 +159,19 @@ extension ChatViewController {
     }
     
     private func configureTableView() {
-        cellProvider = { [self] (tableView, indexPath, item) in
-            
-            if viewModel.chats[indexPath.row].senderNickname == viewModel.chatroom.chatMateNickname {
+        cellProvider = { [weak self] (tableView, indexPath, item) in
+            guard let self else { return UITableViewCell() }
+            if item.senderNickname == viewModel.chatroom.chatMateNickname {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: "OpponentChatCell", for: indexPath) as? OpponentChatCell else { fatalError() }
-                cell.messageLabel.text = viewModel.chats[indexPath.row].message
-                cell.dateLabel.text = viewModel.chats[indexPath.row].createDateTime
+                cell.messageLabel.text = item.message
+                cell.dateLabel.text = item.createDateTime
                 
                 return cell
             } else {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: "MyChatCell", for: indexPath) as? MyChatCell else { fatalError() }
                 
-                cell.messageLabel.text = viewModel.chats[indexPath.row].message
-                cell.dateLabel.text = viewModel.chats[indexPath.row].createDateTime
+                cell.messageLabel.text = item.message
+                cell.dateLabel.text = item.createDateTime
                 
                 return cell
             }

@@ -28,8 +28,9 @@ struct ChatLog: Codable {
     let empty: Bool
 }
 
-struct Message: Codable, Hashable {
+struct Message: Codable, Hashable, Identifiable {
     // ⭐️ TO DO: 원래는 메일이나 id같은 고유값을 갖고 있어야함. ⭐️
+    let id: UUID = UUID()
     let senderNickname: String
     let senderProfileURL: String?
     let receiverNickname: String

@@ -22,8 +22,9 @@ class ChatViewModel {
         self.myNickname = UserDefaults.standard.string(forKey: UserDefaultsKey.myNickname) ?? ""
         
         webSocketManager = WebSocketManager()
-        webSocketManager.connect()
-        webSocketManager.subscribe(opponentEmail: chatroom.chatMateEmail, myEmail: myEmail)
+//        webSocketManager.connect()
+//        webSocketManager.subscribe(opponentEmail: chatroom.chatMateEmail, myEmail: myEmail)
+        webSocketManager.delegate = self
     }
     
     func fetchChatLog(completion: () -> Void) async {
@@ -46,8 +47,10 @@ class ChatViewModel {
         completion(message)
     }
     
-    func receiveMessage(message: Message) {
+    func receiveMessage(message: Message?) {
+        guard let message else { return }
         chats.append(message)
+        NotificationCenter.default.post(name: .receiveMessage, object: nil)
     }
     
     deinit {
@@ -55,3 +58,9 @@ class ChatViewModel {
     }
 }
 
+extension ChatViewModel: WebSocketManagerDelegate {
+    
+    func receiveMessage(_ message: Message?) {
+        receiveMessage(message: message)
+    }
+}

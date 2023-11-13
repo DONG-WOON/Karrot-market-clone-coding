@@ -31,14 +31,15 @@ class ChatRoomListViewController: UIViewController {
         
         configureViews()
         
-        self.viewModel.$chatRoomList
-                    .receive(on: DispatchQueue.main)
-                    .sink(receiveValue: { [weak self] _ in
-                        self?.chatRoomListView.reloadData()
-                    })
-                    .store(in: &anyCancellable)
+        self.viewModel
+            .$chatRoomList
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] _ in
+                self?.chatRoomListView.reloadData()
+            })
+            .store(in: &anyCancellable)
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         

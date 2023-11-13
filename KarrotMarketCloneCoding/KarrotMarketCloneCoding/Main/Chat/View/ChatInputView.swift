@@ -14,6 +14,21 @@ class ChatInputView: UIView {
     let sendButton = UIButton()
     let messageTextView = UITextView()
     
+    private var text: String? {
+        didSet {
+            guard let text else {
+                sendButton.isEnabled = false
+                return
+            }
+            
+            if !text.isEmpty {
+                sendButton.isEnabled = true
+            } else {
+                sendButton.isEnabled = false
+            }
+        }
+    }
+    
     var plusButtonTapAction: () -> Void = {}
     var sendButtonTapAction: (String) -> Void = { Text in }
     
@@ -38,13 +53,15 @@ class ChatInputView: UIView {
 
         // Send 버튼 설정
         sendButton.setImage(UIImage(named: "send"), for: .normal)
-
+        sendButton.isEnabled = false
+        
         // 텍스트 뷰 설정
         messageTextView.layer.cornerRadius = 20
         messageTextView.backgroundColor = .systemGray3.withAlphaComponent(0.3)
         messageTextView.font = .systemFont(ofSize: 18)
         messageTextView.textContainerInset = UIEdgeInsets(top: 9, left: 8, bottom: 9, right: 8)
         messageTextView.delegate = self
+        messageTextView.enablesReturnKeyAutomatically = true
 
         // 서브뷰 추가
         addSubview(plusButton)
@@ -64,6 +81,7 @@ class ChatInputView: UIView {
     func sendButtonDidTapped() {
         sendButtonTapAction(messageTextView.text)
         messageTextView.text = nil
+        sendButton.isEnabled = false
     }
     private func setupConstraints() {
         // 플러스 버튼 제약 조건 설정
@@ -92,8 +110,26 @@ class ChatInputView: UIView {
 
 extension ChatInputView: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
+        self.text = textView.text
         if textView.contentSize.height <= 110 {
             adjustBottomViewHeight()
+        }
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        guard let _text = textView.text else { return true }
+        
+        let newLength = _text.count + text.count - range.length
+        let maxLength = 100
+        
+        if text.isEmpty {
+            return true
+        }
+        
+        if range.location + range.length <= 100 {
+            return newLength <= maxLength
+        } else {
+            return false
         }
     }
     

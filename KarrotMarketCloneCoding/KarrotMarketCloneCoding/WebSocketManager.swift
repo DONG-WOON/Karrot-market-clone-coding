@@ -12,9 +12,15 @@ enum WebSocketError: Error {
     case invalidURL
 }
 
+protocol WebSocketManagerDelegate: AnyObject {
+    func receiveMessage(_ message: Message?)
+}
+
 final class WebSocketManager {
     private var socketClient: StompClientLib
     private let url = URL(string: KarrotURL.socket)!
+    
+    weak var delegate: WebSocketManagerDelegate?
     
     init() {
         socketClient = StompClientLib()
@@ -51,11 +57,10 @@ extension WebSocketManager: StompClientLibDelegate {
         print(#function,"🔥")
     }
     
-    
     func stompClient(client: StompClientLib, didReceiveMessageWithJSONBody jsonBody: AnyObject?, akaStringBody stringBody: String?, withHeader header: [String : String]?, withDestination destination: String) {
         if let data = stringBody?.data(using: String.Encoding.utf8) {
             let message = try? JSONDecoder().decode(Message.self, from: data)
-            NotificationCenter.default.post(name: .receiveMessage, object: message)
+            delegate?.receiveMessage(message)
         }
     }
     
