@@ -26,7 +26,6 @@
 
 - MVVM
 - UIKit
-- keyChain
 - MapKit
 - Alamofire, Kingfisher
 - StompClientLib
@@ -95,11 +94,11 @@
 ### ✅ Push Notification
 
 - FCM(Firebase Cloud Messaging)을 이용하여 Push Notification을 구현
-- 앱에서 제공하는 채팅과 알림 기능을 제공
+- 앱에서 제공하는 채팅 알림 기능을 제공
 
 ### ✅ Swift Concurrency (async / await)
 
-- swift 5.5에 도입된 **`async / await`**을 적용, 기존의 비동기 작업 코드간결화 및 가독성 향상
+- swift 5.5에 도입된 `async / await`을 적용, 기존의 비동기 작업 코드간결화 및 가독성 향상
 
 # 고민한 점
 
